@@ -1,0 +1,237 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load thumbnail %}
+{% block content %}
+<style type="text/css">
+  .bg-nav {
+    display: none;
+  }
+  .navbar-detail {
+    display: none;
+  }
+</style>
+  <header>
+    <nav style="">
+      <ul class="nav px-lg-4">
+        <li class="nav-item">
+          <!--
+          <a class="nav-link button button-nav" href="index.html">Inicio</a>
+          -->
+        </li>
+        
+        <li class="ml-auto nav-item">
+          <a class="nav-link button button-nav project-button " href="{% url 'listado' %}"><i class="fa-fw fas fa-building"></i> Proyectos</a>
+        </li>
+      </ul>
+      
+      <!-- Collapsible content -->
+      <div class="collapse navbar-collapse navbarSupportedContent1-detail" id="navbarSupportedContent1">
+        <!-- Links -->
+        <ul class="navbar-nav font-weight-bold">
+          {% for development in object_list  %}
+            <li class="nav-item nav-project">
+              <a class="nav-link nav-link-detail" href="{% url 'detalle' development.slug %}"><i class="fas fa-genderless fa-fw"></i> {{ development.name }}</a>
+            </li>
+          {% endfor %}
+        </ul>
+        <!-- Links -->
+      </div>
+      <!-- Collapsible content -->
+    </nav>
+    <!-- Content -->
+    <!-- Hero -->
+    <div class="hero p-4">
+      <div class="hero__top p-4">
+        <div class="hero__title py-4">
+          Grupo <span class="hero__title--bottom">Gamarq</span>
+        </div>
+        <div class="hero__cta my-4">
+          <a href="{% url 'listado' %}" class="shadow button  button-yesway"> Nuestros proyectos</a>
+        </div>
+      </div>
+      
+      <div class="hero__footer d-flex">
+        <div class="hero__contact">
+          <div class="hero__contact--icon">
+            <i class="round-boi fas fa-phone"></i>
+          </div>
+          <div class="d-flex-col-center">
+            <div class="hero__contact--small">
+              Llamanos
+            </div>
+            <div class="hero__contact--action">
+              55-11-10-10-97
+            </div>
+          </div>
+        </div>
+        <div class="hero__contact ml-lg-4">
+          <div class="hero__contact--icon">
+            <i class="round-boi fas fa-map-marked-alt"></i>
+          </div>
+          <div class="d-flex-col-center">
+            <div class="hero__contact--small">
+              Encuentra
+            </div>
+            <div class="hero__contact--action">
+              Proyectos
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <!-- Project Grid -->
+    <section class="projects py-4">
+      <div class="container unset">
+        <div class="row">
+          <div class="col-md-3 col-sm-4 col-xs-12">
+            <div class="dev-card no-hover">
+              <div class="dev-card__logo--wrapper">
+                <img class="dev-card__logo " src="{% static "img/office.png" %}">
+              </div>
+              <h5 class="font-weight-bold">Nuestros proyectos</h5>
+              <div class="dev-text">
+                Tenemos el compromiso de entregar lo mejor de nosotros en cada uno de nuestros proyectos. Trabajamos en equipo para brindarte proyectos de calidad.
+              </div>
+            </div>
+          </div>
+          <div class="col-md-9 col-sm-8 col-xs-12 p-0-sm">
+            <div class="slick">
+              <!-- one item -->
+              {% for development in object_list %}
+                
+                <div class="one-development-card">
+                  <a href="{% url 'detalle' development.slug %}">
+                    {% thumbnail development.image "500x500" crop="center" as im %}
+                    <div class="dev-card single-dev-card" style="background:linear-gradient(transparent, transparent, transparent, transparent, #000), url('media/{{im}}');border: 2px solid #424242;background-position: center;background-size: cover;justify-content:flex-end;background-repeat: no-repeat;width: 95%;max-width: 210px;" width="{{ im.width }}" height="{{ im.height }}">
+                    {% endthumbnail %}
+
+                      <div class="dev-picture"></div>
+                      <div class="dev-text-wrapper">
+                        <h6 class="font-weight-bold text-uppercase">{{ development.name }}</h6>
+                        <div class="dev-text">
+                          {% for status in development.status.all  %}
+                            {{ status }}
+                          {% endfor %}
+                          | 
+                          {% for type in development.category.all  %}
+                            {{ type }} {% if not forloop.last %}· {% endif %}
+                          {% endfor %}
+                        </div>
+                      </div>
+                    </div>
+                  </a>
+                </div>
+              {% endfor %}
+              <!--/ end one item -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- About us -->
+    <section class="about">
+      <div class="container py-4">
+        <div class="headline py-4 text-center">
+          Somos <strong>GAMARQ</strong>
+        </div>
+        <div class="col-md-12 text-center">
+          
+          <p class="about--copy pb-4">
+            Estamos dedicados al desarrollo inmobiliario de calidad y construcción de proyectos en el área metropolitana.
+            Ofrecemos ideas y propuestas innovadoras, siempre comprometidos a crear espacios y ambientes que resalten en <span class="text-highlight">belleza calidad</span> y <span class="text-highlight">uso.</span>
+            <span class="d-block">
+              En cada uno de nuestros proyectos <strong class="text-uppercase">Grupo Gamarq</strong> refleja estilo, gusto y pasión por el diseño y lo innovador.
+            </span>
+          </p>
+          
+        </div>
+        <div class="row justify-content-center about--grid flex-nowrap">
+          <div class="text-center">
+            <div class="about-card">
+              <div class="dev-card__logo--wrapper">
+                <img class="about-card__logo" src="{% static "img/depto.png" %}">
+              </div>
+              <h5 class="font-weight-bold">DEPARTAMENTOS</h5>
+            </div>
+          </div>
+          <div class="text-center">
+            <div class="about-card">
+              <div class="dev-card__logo--wrapper">
+                <img class="about-card__logo" src="{% static "img/oficina.png" %}">
+              </div>
+              <h5 class="font-weight-bold">OFICINAS</h5>
+            </div>
+          </div>
+          <div class="text-center">
+            <div class="about-card">
+              <div class="dev-card__logo--wrapper">
+                <img class="about-card__logo" src="{% static "img/suite.png" %}">
+              </div>
+              <h5 class="font-weight-bold">SUITES</h5>
+            </div>
+          </div>
+          <!-- End Row -->
+        </div>
+        <div class="hero__cta my-4 text-center">
+          <a href="{% url 'listado' %}" class="shadow button button-noway">Ver el listado</a>
+        </div>
+      </div>
+    </section>
+    <!-- Map -->
+    <section class="gmap">
+      <div class="container gmap--wrapper bg-white py-4">
+        <h4 class="headline py-4 text-center text-dark mb-3">
+        Corporativo Gamarq
+        </h4>
+        <div class="gmap">
+          <div class="mapouter"><div class="gmap_canvas"> <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3763.2832764629475!2d-99.17306478476502!3d19.400162746743508!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85d1ff6c5be21029%3A0xd147b4777488d68!2sCorporativo+Insurgentes!5e0!3m2!1sen!2smx!4v1554918202502!5m2!1sen!2smx" width="1080" height="500" id="gmap_canvas" frameborder="0" scrolling="no" style="border:0" marginheight="0" marginwidth="0" allowfullscreen></iframe></div><style></style></div>
+
+
+        </div>
+      </div>
+    </section>
+    <!-- Contact -->
+    <section class="contact  py-4">
+      <div class="headline__image--wrapper">
+        <img class="headline__image" src="{% static "img/email.png" %}">
+      </div>
+      <div class="headline py-4 text-center">
+        Contacto
+      </div>
+      <div class="contact--description">
+        Nuestro equipo está formado por arquitectos e ingenieros con experiencia, dedicados al desarrollo de proyectos arquitectónicos y diseño de inmuebles.
+      </div>
+      <!--form-->
+      <div class="container contact-form">
+        <form method="post">
+          {% csrf_token %}
+          <div class="row py-4">
+            <div class="col-md-6">
+              <div class="form-group">
+                <input required type="text" name="txtName" class="form-control" placeholder="Nombre y Apellido" value="" />
+              </div>
+              <div class="form-group">
+                <input required type="text" name="txtEmail" class="form-control" placeholder="Email *" value="" />
+              </div>
+              <div class="form-group">
+                <input required type="text" name="txtPhone" class="form-control" placeholder="Teléfono *" value="" />
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <textarea required name="txtMsg" class="form-control" placeholder="Tu mensaje *" style="width: 100%; height: 150px;"></textarea>
+              </div>
+              <div class="form-group">
+                <button type="submit" class="button button-yesway shadow">Enviar</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      
+    </section>
+  </main>
+  
+{% endblock content %}

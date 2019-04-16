@@ -1,0 +1,125 @@
+{% load static %}
+<html class="no-js" lang="">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="x-ua-compatible" content="ie=edge">
+		<title></title>
+		<meta name="description" content="">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<link rel="manifest" href="site.webmanifest">
+		<link rel="apple-touch-icon" href="icon.png">
+		<!-- Place favicon.ico in the root directory -->
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+		<link rel="stylesheet" href="{% static 'css/styles.css' %}">
+		<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.css">
+		<link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,600,700|Roboto" rel="stylesheet">
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+    	<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.6/dist/jquery.fancybox.min.css" />
+	</head>
+	<body>
+		<nav class="bg-nav">
+		  <ul class="nav px-lg-4 container">
+		    <li class="nav-item">
+		      <a class="nav-link button button-nav" href="/">GRUPO GAMARQ</a>
+		    </li>
+		    
+		    <li class="ml-auto nav-item">
+		      <a class="nav-link button button-nav project-button button" href="{% url 'listado' %}"><i class="fa-fw fas fa-building"></i> Proyectos</a>
+		    </li>
+		  </ul>
+		  
+		  <!-- Collapsible content -->
+		  <div class="collapse navbar-collapse navbarSupportedContent1-detail" id="navbarSupportedContent1">
+		    <!-- Links -->
+		    <ul class="navbar-nav navbar-detail">
+		      {% for development in object_list  %}
+	              <li class="nav-item nav-project">
+	                <a class="nav-link nav-link-detail" href="{% url 'detalle' development.slug %}"><i class="fas fa-genderless fa-fw"></i> {{ development.name }}</a>
+	              </li>
+	            {% endfor %}
+		    </ul>
+		    <!-- Links -->
+		  </div>
+		  <!-- Collapsible content -->
+		</nav>
+		{% block content %}
+		{% endblock %}
+		<footer class="bg-dark p-4">
+			<small class="text-center font-weight-lighter text-white d-block">© Copyright 2019 GAMARQ · Todos los derechos reservados · Sitio realizado por <a href="http://www.comuna18.com/">Comuna18</a></small>	
+		</footer>
+	</body>
+	
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.js"></script>
+	    <script>
+	    $(document).ready(function() {
+	        $('.slick').slick({
+	            infinite: true,
+	            // dots:true,
+	            slidesToShow: 5,
+	            // nextArrow: $("#next"),
+	            // prevArrow: $("#previous"),
+	            arrows: false,
+	            autoplay: true,
+	            autoplaySpeed: 3000,
+	            swipeToSlide: true,
+	            responsive: [{
+	                    breakpoint: 1340,
+	                    settings: {
+	                        slidesToShow: 4,
+	                        slidesToScroll: 1,
+	            			swipeToSlide: true
+
+	                    }
+	                },
+	                {
+	                    breakpoint: 1025,
+	                    settings: {
+	                        slidesToShow: 3,
+	                        slidesToScroll: 1,
+	            			swipeToSlide: true
+
+	                    }
+	                },
+	                {
+	                    breakpoint: 770,
+	                    settings: {
+	                        slidesToShow: 2,
+	                        slidesToScroll: 1,
+	            			swipeToSlide: true
+
+	                    }
+	                },
+	                {
+	                    breakpoint: 660,
+	                    settings: {
+	                        slidesToShow: 1,
+	                        centerMode: true,
+	                        centerPadding: '6em',
+	                        swipe: true,
+	            			swipeToSlide: true
+
+	                    }
+	                },
+	                {
+	                    breakpoint: 409,
+	                    settings: {
+	                        slidesToShow: 1,
+	                        centerMode: true,
+	                        centerPadding: '4em',
+	                        swipe: true,
+	            			swipeToSlide: true
+
+	                    }
+	                }
+	            ]
+	        });
+	    }); 
+		</script>
+    	<script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.6/dist/jquery.fancybox.min.js"></script>
+		
+		{% block js %}
+		{% endblock js %}
+</html>

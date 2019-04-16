@@ -1,0 +1,272 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+	<style type="text/css">
+	#splash {
+		background: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 0.5))), url("/media/{{development.image}}");
+		background-color: rgba(0, 0, 0, 0);
+		background-repeat: no-repeat;
+		background-size: cover;
+		background-position: center;
+		background: -webkit-linear-gradient(rgba(0, 0, 0, 0.5)), url("/media/{{development.image}}");
+		background: -o-linear-gradient(rgba(0, 0, 0, 0.5)), url("/media/{{development.image}}");
+		background: linear-gradient(rgba(0, 0, 0, 0.5)), url("/media/{{development.image}}");
+	}
+	</style>
+	<!-- Content -->
+	<main>
+		<section id="splash">
+			<div class="hero position--relative">
+				<div class="hero__top p-4">
+					<div class="hero__title py-4 container">
+						<span class="hero__title--bottom">{{ development.name }}</span>
+						<div class="dev-types mt-3">
+						{% for type in development.category.all  %}
+							{{ type }} {% if not forloop.last %}· {% endif %}
+						{% endfor %}
+						</div>
+					</div>
+				</div>
+				<div class="project-detail-tab hero__footer hero__footer--right absolute--bottom--right">
+					{% if development.logo  %}
+						<div class="hero__logo--wrapper pt-2 pl-2 pr-2">
+							<img class="hero__logo" src="{{ development.logo.url }}">
+							<div class="hero__logo--text mt-2">
+								<div class="text-dark">
+									{% if development.website %}	
+									<div class="hero__contact--small text-center">
+										<a href="#">
+											Visita el micrositio
+										</a>
+									</div>
+									{% endif %}
+
+								</div>
+							</div>
+						</div>
+					{% endif %}
+				</div>
+			</div>
+		</section>
+		<section id="intro" class="bg-white">
+			<div class="container p-4 d-flex space-between flex-sm-column-inverse">
+				<div class="flavor">
+					<div class="slogan">
+						― {{ development.address }}
+					</div>
+					<div class="slogan--large pl-lg-3">{{ development.slogan }}</div>
+				</div>
+				<div class="detail">
+					<p class="mt-sm-2 ml-lg-4 text-muted">
+						{{ development.description }}
+					</p>
+				</div>
+			</div>
+		</section>
+
+		{% if development.video %}			
+		<section id="video">
+			<div class="hero position--relative">
+				<div class="hero__top video-container">
+					<video class="development-video" src="{{ development.video }}" autoplay="" muted="" loop="" playsinline=""></video>
+					<div class="hero__title py-4 text-center">
+						<span class="hero__title--bottom mt-4"></span>
+					</div>
+				</div>
+				<div class="project-detail-tab hero__footer hero__footer--left absolute--bottom--left">
+					{% if development.logo  %}
+						<div class="hero__logo--wrapper pt-2 pl-2 pr-2">
+							<img class="hero__logo" src="{{ development.logo.url }}">
+							<div class="hero__logo--text mt-2">
+								<div class="text-dark">
+
+									{% if development.website %}	
+									<div class="hero__contact--small text-center">
+										<a href="#">
+											Visita el micrositio
+										</a>
+									</div>
+									{% endif %}
+
+								</div>
+							</div>
+						</div>
+					{% endif %}
+				</div>
+			</div>
+		</section>
+		{% endif %}
+
+		{% if development.picturegallery_set.all %}			
+		<section id="gallery" class="bg-white">
+			<div class="container py-4">
+				<h2 class="gallery--title text-uppercase pb-2">
+				― Galería
+				</h2>
+				<div class="gallery-grid">
+					{% for item in development.picturegallery_set.all   %}
+						<div class="gallery-item--wrapper">
+							<a data-fancybox="gallery" href="{{ item.image.url }}">
+							<img alt="pic" class="gallery-item" src="{{ item.image.url }}"></a>
+							<div class="gallery-item-description p-2">
+								<div class="gallery-item-title text-uppercase">
+									{{ item.name }}
+								</div>
+								<div class="gallery-item-text">
+									{{ item.description }}
+								</div>
+							</div>
+						</div>
+					{% endfor %}
+				</div>
+			</div>
+		</section>
+		{% endif %}
+
+		{% if development.blueprintgallery_set.all %}			
+		<section id="gallery-b" class="text-white" style="background:transparent;">
+			<div class="container py-4">
+				<h2 class="gallery--title text-uppercase pb-2">
+				― Planta
+				</h2>
+				<div class="gallery-grid--blueprint">
+					{% for item in development.blueprintgallery_set.all  %}
+						<div class="gallery-item--wrapper">
+							<a data-fancybox="gallery1" href="{{ item.image.url }}">
+							<img alt="pic" class="gallery-item" style="object-fit:contain; background:white;" src="{{ item.image.url }}"></a>
+							<div class="gallery-item-description p-2">
+								<div class="gallery-item-title text-uppercase">
+									{{ item.name }}
+								</div>
+								<div class="gallery-item-text">
+									{{ item.description }}
+								</div>
+							</div>
+						</div>
+					{% endfor %}
+				</div>
+			</div>
+		</section>
+		{% endif %}
+
+		<section id="specification" class="bg-dark" style="color:#888">
+			<div class="container py-4">
+				<div class="bd-example bd-example-tabs">
+					<div class="row flex-sm-column-inverse">
+						<div class="col-12 max-width-unset-sm">
+							<div class="tab-content" id="v-pills-tabContent">
+								<div class="tab-pane p-4 fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
+									<h1 class="mb-3 mt-0 text-white b-b">{{  development.name }}</h1>
+									{% for item in development.amenities_set.all  %}
+										<ul class="list-unstyled text-white feature-list pl-lg-1">
+											<li> <i class="fas fa-fw mr-2 {{ item.icon }}"></i> {{  item.name }}
+											</li>
+											<li><i class="fas fa-fw mr-2"></i><small style="text-transform:none;"> {{ item.description }}</small></li>
+										</ul>
+									{% endfor %}
+									<p class="text-white">{{  development.about }} </p>
+
+									<hr style="background:white;"> 
+
+									{% if development.address %}
+									   <!-- Full Width -->
+									   <div id="googlemapsFullWidth" style="width:100%; height:500px;"></div>
+									   <div class="container">
+									      <div class="row">
+									      </div>
+									   </div>
+									   {% else %}
+									   <div class="spacer" style="background-color: #fff;"></div>
+									{% endif %}
+
+								</div>
+								<div class="tab-pane p-4 fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
+									<h1 class="mb-3 mt-0 text-white b-b">Mapa de la Zona</h1>
+									<iframe class="d-block w-100 mb-4" height="400" src="https://snazzymaps.com/embed/134009"></iframe>
+									<a class="btn btn-outline-danger" href="">Ir al micrositio</a>
+								</div>
+								
+							</div>
+						</div>
+						
+					</div>
+				</div>
+			</div>
+		</section>
+		<section id="gallery" class="bg-white">
+			<div class="container py-4">
+				<div class="text-left text-muted pl-3">
+					<h3 class="text-dark">¿Necesitas más información? </h3> Nuestro equipo está formado por arquitectos e ingenieros con experiencia, dedicados al desarrollo de proyectos arquitectónicos y diseño de inmuebles. Siempre estamos listos para brindarte la atención que te mereces.
+				</div>
+				<!--form-->
+				<div class="container contact-form">
+					<div class="contact-image text-center">
+						<!--
+						<img src="https://image.ibb.co/kUagtU/rocket_contact.png" alt="rocket_contact"/>
+						-->
+					</div>
+					<form method="post">
+						{% csrf_token %}
+						<div class="row py-4">
+							<div class="col-md-6">
+								<div class="form-group">
+									<input required type="text" name="txtName" class="form-control" placeholder="Nombre y Apellido" value="" />
+								</div>
+								<div class="form-group">
+									<input required type="text" name="txtEmail" class="form-control" placeholder="Email *" value="" />
+								</div>
+								<div class="form-group">
+									<input required type="text" name="txtPhone" class="form-control" placeholder="Teléfono *" value="" />
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<textarea required name="txtMsg" class="form-control" placeholder="Tu mensaje *" style="width: 100%; height: 150px;"></textarea>
+								</div>
+								<div class="form-group text-right" style="color:white !important">
+									<button type="submit" class="button button-yesway shadow-sm" style="color:white !important">Enviar</a>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</section>
+	</main>
+	
+
+{% endblock %}
+{% block js %}
+	
+<script type="text/javascript">
+
+   var address = '{{ development.address }}' ;
+   var map;
+         function initMap() {
+           map = new google.maps.Map(document.getElementById('googlemapsFullWidth'), {
+             center: {lat: -50.397, lng: 150.644},
+             zoom: 17,
+         });
+         var geocoder = new google.maps.Geocoder();
+         geocoder.geocode({'address': address}, function(results, status) {
+                   if (status === 'OK') {
+                     map.setCenter(results[0].geometry.location);
+                     var marker = new google.maps.Marker({
+                       map: map,
+                       position: results[0].geometry.location
+                     });
+                   } else {
+                     console.log('Revisa que la direcciÃ³n sea vÃ¡lida en Google Maps: ' + status);
+                   }
+                 });
+            var marker = new google.maps.Marker({
+                   position: {lat: -34.397, lng: 150.644},
+                   map: map
+         });
+
+      }
+
+</script>	
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDE6ze3T92EmmfG7jFpcmqZCaEkumaJqLQ&callback=initMap"></script>	
+
+{% endblock js %}

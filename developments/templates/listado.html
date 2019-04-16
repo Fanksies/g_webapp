@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load thumbnail %}
+{% block content %}
+  <main class="container">
+    <h1 class="text-white font-weight-bold mb-0 pt-4">Filtrar por categorías</h1>
+    <div class="header my-4 text-white">
+      <div class="d-flex flex-wrap filter-grid-sm">
+        <button class="btn btn-filter my-1 btn-desarrollo" data-filter="all">Ver Todos</button>
+        {% for type in filter_types  %}          
+            <button class="btn btn-filter my-1 btn-desarrollo" data-filter=".{{type}}">{{ type }}</button>
+        {% endfor %}
+      </div>
+    </div>
+    <div class="grid pb-4">
+      {% for development in object_list %}
+      <div class="dev-item mix {% for type in development.category.all %}{{ type }} {% endfor %}">
+      <a href="{% url 'detalle' development.slug %}">
+        <div class="dev-content">
+          <div class="dev-title">
+            <h3>{{ development.name }} <span>
+              
+             {{ development.neighborhood }}<br>{% for type in development.category.all  %}
+                {{ type }} {% if not forloop.last %}| {% endif %}
+              {% endfor %}</span></h3>
+          </div>
+          <div class="photothumb-wrapper">
+            <!--
+            <img class="dev-photothumb" src="{{ development.image.url }}">
+            -->
+            {% thumbnail development.image "500x500" crop="center" as im %}
+                <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
+            {% endthumbnail %}
+          </div>
+        </div>
+      </a>
+    </div>
+  {% endfor %}
+</div>
+</main>
+{% endblock content %}
+{% block js %}
+<script src="{% static "js/mixitup.js" %}"></script>
+<script>
+  var mixer = mixitup('.grid');
+</script>
+{% endblock js %}
+
